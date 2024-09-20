@@ -1,27 +1,30 @@
-package edu.byuh.cis.cs300.myfirstapp;
+package edu.byuh.cis.cs300.myfirstapp.ui;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
+import edu.byuh.cis.cs300.myfirstapp.sprites.Duck;
+
 public class KarlView extends View {
 
     private Paint momo;
     private Paint alema;
-    private Bitmap duckImg;
+    //private Bitmap duckImg;
+    private Duck fah;
+    private boolean initialized;
 
     public KarlView(Context c) {
         super(c);
+        initialized = false;
         momo = new Paint();
         momo.setColor(Color.BLUE);
         momo.setStyle(Paint.Style.STROKE);
         alema = new Paint();
         alema.setColor(Color.RED);
-        duckImg = BitmapFactory.decodeResource(getResources(), R.drawable.duck);
+        //duckImg = BitmapFactory.decodeResource(getResources(), R.drawable.duck);
     }
 
     @Override
@@ -33,15 +36,19 @@ public class KarlView extends View {
         float rectRight = w * 0.5f;
         float rectTop = h * 0.2f;
         float rectBottom = h * 0.6f;
-        int duckSize = (int)(w * 0.25);
-        //TODO next time, show how to make this
-        //more efficient for animation
-        duckImg = Bitmap.createScaledBitmap(duckImg, duckSize, duckSize, true);
-        momo.setStrokeWidth(w * 0.01f);
-        alema.setStrokeWidth(w * 0.02f);
+        if (!initialized) {
+            //int duckSize = (int)(w * 0.25);
+            //duckImg = Bitmap.createScaledBitmap(duckImg, duckSize, duckSize, true);
+            fah = new Duck(getResources(), w);
+            fah.setLocation(w*0.5f, h*0.6f);
+            momo.setStrokeWidth(w * 0.01f);
+            alema.setStrokeWidth(w * 0.02f);
+            initialized = true;
+        }
         c.drawColor(Color.GREEN);
         c.drawRect(rectLeft, rectTop, rectRight, rectBottom, momo);
         c.drawLine(w*0.4f, h*0.3f, w*0.8f, h*0.8f, alema);
-        c.drawBitmap(duckImg, w*0.5f, h*0.6f, alema);
+        fah.draw(c);
+        //c.drawBitmap(duckImg, w*0.5f, h*0.6f, alema);
     }
 }
