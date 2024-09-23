@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.view.View;
+import android.widget.Toast;
 
 import edu.byuh.cis.cs300.myfirstapp.sprites.Duck;
 
@@ -15,6 +17,8 @@ public class KarlView extends View {
     //private Bitmap duckImg;
     private Duck fah;
     private boolean initialized;
+    private Toast hiram;
+
 
     public KarlView(Context c) {
         super(c);
@@ -49,6 +53,21 @@ public class KarlView extends View {
         c.drawRect(rectLeft, rectTop, rectRight, rectBottom, momo);
         c.drawLine(w*0.4f, h*0.3f, w*0.8f, h*0.8f, alema);
         fah.draw(c);
-        //c.drawBitmap(duckImg, w*0.5f, h*0.6f, alema);
+        hiram = Toast.makeText(getContext(),
+                "CS300 is my favorite class",
+                Toast.LENGTH_LONG);
+        hiram.show();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

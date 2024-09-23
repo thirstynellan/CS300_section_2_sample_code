@@ -10,7 +10,7 @@ import edu.byuh.cis.cs300.myfirstapp.R;
 
 public class Duck {
     private Bitmap img;
-    private RectF bounds;
+    protected RectF bounds;
 
     public Duck(Resources res, float w) {
         img = BitmapFactory.decodeResource(res, R.drawable.duck);
