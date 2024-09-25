@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -53,10 +55,22 @@ public class KarlView extends View {
         c.drawRect(rectLeft, rectTop, rectRight, rectBottom, momo);
         c.drawLine(w*0.4f, h*0.3f, w*0.8f, h*0.8f, alema);
         fah.draw(c);
-        hiram = Toast.makeText(getContext(),
-                "CS300 is my favorite class",
-                Toast.LENGTH_LONG);
-        hiram.show();
+//        hiram = Toast.makeText(getContext(),
+//                "CS300 is my favorite class",
+//                Toast.LENGTH_LONG);
+//        hiram.show();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent m) {
+        if (m.getAction() == MotionEvent.ACTION_DOWN) {
+            float x = m.getX();
+            float y = m.getY();
+            Log.d("CS3000", "VIEW: You just tapped the screen at (" + x + "," + y + ")");
+        }
+        //true: I handled it; we're done.
+        //false: I'll pass this on to the next object in the CoR
+        return true;
     }
 }
 
