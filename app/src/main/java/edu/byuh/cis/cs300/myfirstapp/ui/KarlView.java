@@ -66,12 +66,20 @@ public class KarlView extends View {
         if (m.getAction() == MotionEvent.ACTION_DOWN) {
             float x = m.getX();
             float y = m.getY();
-            Log.d("CS3000", "VIEW: You just tapped the screen at (" + x + "," + y + ")");
+            if (fah.contains(x,y)) {
+                fah.respondToTap();
+                Log.d("CS3000", "VIEW: You just tapped the duck");
+            } else {
+                Log.d("CS3000", "You missed the duck!");
+            }
+
         }
+        invalidate();
         //true: I handled it; we're done.
         //false: I'll pass this on to the next object in the CoR
         return true;
     }
+
 }
 
 
