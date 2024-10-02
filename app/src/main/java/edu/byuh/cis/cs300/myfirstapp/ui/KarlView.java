@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +22,20 @@ public class KarlView extends View {
     private Duck fah;
     private boolean initialized;
     private Toast hiram;
+    private Timer tim;
 
+    public class Timer extends Handler {
+        public Timer() {
+            sendMessageDelayed(obtainMessage(), 100);
+        }
+
+        @Override
+        public void handleMessage(Message m) {
+            fah.dance();
+            invalidate();
+            sendMessageDelayed(obtainMessage(), 100);
+        }
+    }
 
     public KarlView(Context c) {
         super(c);
@@ -49,6 +64,7 @@ public class KarlView extends View {
             fah.setLocation(w*0.5f, h*0.6f);
             momo.setStrokeWidth(w * 0.01f);
             alema.setStrokeWidth(w * 0.02f);
+            tim = new Timer();
             initialized = true;
         }
         c.drawColor(Color.GREEN);
