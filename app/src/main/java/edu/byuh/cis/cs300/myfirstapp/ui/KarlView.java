@@ -12,30 +12,19 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import edu.byuh.cis.cs300.myfirstapp.Observer;
+import edu.byuh.cis.cs300.myfirstapp.Timer;
 import edu.byuh.cis.cs300.myfirstapp.sprites.Duck;
 
-public class KarlView extends View {
+public class KarlView extends View implements Observer {
 
-    private Paint momo;
     private Paint alema;
+    private Paint momo;
     //private Bitmap duckImg;
     private Duck fah;
     private boolean initialized;
     private Toast hiram;
     private Timer tim;
-
-    public class Timer extends Handler {
-        public Timer() {
-            sendMessageDelayed(obtainMessage(), 100);
-        }
-
-        @Override
-        public void handleMessage(Message m) {
-            fah.dance();
-            invalidate();
-            sendMessageDelayed(obtainMessage(), 100);
-        }
-    }
 
     public KarlView(Context c) {
         super(c);
@@ -65,6 +54,8 @@ public class KarlView extends View {
             momo.setStrokeWidth(w * 0.01f);
             alema.setStrokeWidth(w * 0.02f);
             tim = new Timer();
+            tim.subscribe(fah);
+            tim.subscribe(this);
             initialized = true;
         }
         c.drawColor(Color.GREEN);
@@ -96,6 +87,10 @@ public class KarlView extends View {
         return true;
     }
 
+    @Override
+    public void update() {
+        invalidate();
+    }
 }
 
 
