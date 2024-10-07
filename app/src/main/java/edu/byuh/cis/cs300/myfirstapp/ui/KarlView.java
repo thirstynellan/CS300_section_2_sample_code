@@ -12,6 +12,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.byuh.cis.cs300.myfirstapp.Observer;
 import edu.byuh.cis.cs300.myfirstapp.Timer;
 import edu.byuh.cis.cs300.myfirstapp.sprites.Duck;
@@ -20,8 +23,8 @@ public class KarlView extends View implements Observer {
 
     private Paint alema;
     private Paint momo;
-    //private Bitmap duckImg;
-    private Duck fah;
+    //private Duck fah;
+    private List<Duck> flock;
     private boolean initialized;
     private Toast hiram;
     private Timer tim;
@@ -29,12 +32,13 @@ public class KarlView extends View implements Observer {
     public KarlView(Context c) {
         super(c);
         initialized = false;
+        flock = new ArrayList<>();
         momo = new Paint();
         momo.setColor(Color.BLUE);
         momo.setStyle(Paint.Style.STROKE);
+        momo.setTextSize(70);
         alema = new Paint();
         alema.setColor(Color.RED);
-        //duckImg = BitmapFactory.decodeResource(getResources(), R.drawable.duck);
     }
 
     @Override
@@ -47,21 +51,26 @@ public class KarlView extends View implements Observer {
         float rectTop = h * 0.2f;
         float rectBottom = h * 0.6f;
         if (!initialized) {
-            //int duckSize = (int)(w * 0.25);
-            //duckImg = Bitmap.createScaledBitmap(duckImg, duckSize, duckSize, true);
-            fah = new Duck(getResources(), w);
-            fah.setLocation(w*0.5f, h*0.6f);
+            tim = new Timer();
+            for (int i=0; i<55; i++) {
+                Duck fah = new Duck(getResources(), w);
+                float duckX = (float) (w * 0.75 * Math.random());
+                float duckY = (float) (h * 0.75 * Math.random());
+                fah.setLocation(duckX, duckY);
+                flock.add(fah);
+                tim.subscribe(fah);
+            }
             momo.setStrokeWidth(w * 0.01f);
             alema.setStrokeWidth(w * 0.02f);
-            tim = new Timer();
-            tim.subscribe(fah);
             tim.subscribe(this);
             initialized = true;
         }
         c.drawColor(Color.GREEN);
         c.drawRect(rectLeft, rectTop, rectRight, rectBottom, momo);
         c.drawLine(w*0.4f, h*0.3f, w*0.8f, h*0.8f, alema);
-        fah.draw(c);
+        for (var d : flock) {
+            d.draw(c, momo);
+        }
 //        hiram = Toast.makeText(getContext(),
 //                "CS300 is my favorite class",
 //                Toast.LENGTH_LONG);
@@ -73,13 +82,13 @@ public class KarlView extends View implements Observer {
         if (m.getAction() == MotionEvent.ACTION_DOWN) {
             float x = m.getX();
             float y = m.getY();
-            if (fah.contains(x,y)) {
-                fah.respondToTap();
-                Log.d("CS3000", "VIEW: You just tapped the duck");
-            } else {
-                Log.d("CS3000", "You missed the duck!");
+            List<Duck> doomed = new ArrayList<>();
+            for (var d : flock) {
+                if (d.contains(x, y)) {
+                    doomed.add(d);
+                }
             }
-
+            flock.removeAll(doomed);
         }
         invalidate();
         //true: I handled it; we're done.
