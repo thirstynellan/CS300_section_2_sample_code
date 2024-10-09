@@ -1,6 +1,8 @@
 package edu.byuh.cis.cs300.myfirstapp.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -28,9 +30,19 @@ public class KarlView extends View implements Observer {
     private boolean initialized;
     private Toast hiram;
     private Timer tim;
+    private int level;
+
+    private class HandleButtonClick implements DialogInterface.OnClickListener {
+
+        @Override
+        public void onClick(DialogInterface d, int j) {
+            createDucks(level * 10);
+        }
+    }
 
     public KarlView(Context c) {
         super(c);
+        level = 1;
         initialized = false;
         flock = new ArrayList<>();
         momo = new Paint();
@@ -39,6 +51,19 @@ public class KarlView extends View implements Observer {
         momo.setTextSize(70);
         alema = new Paint();
         alema.setColor(Color.RED);
+    }
+
+    private void createDucks(int n) {
+        float w = getWidth();
+        float h = getHeight();
+        for (int i=0; i<n; i++) {
+            Duck fah = new Duck(getResources(), w);
+            float duckX = (float) (w * 0.75 * Math.random());
+            float duckY = (float) (h * 0.75 * Math.random());
+            fah.setLocation(duckX, duckY);
+            flock.add(fah);
+            tim.subscribe(fah);
+        }
     }
 
     @Override
@@ -52,14 +77,7 @@ public class KarlView extends View implements Observer {
         float rectBottom = h * 0.6f;
         if (!initialized) {
             tim = new Timer();
-            for (int i=0; i<55; i++) {
-                Duck fah = new Duck(getResources(), w);
-                float duckX = (float) (w * 0.75 * Math.random());
-                float duckY = (float) (h * 0.75 * Math.random());
-                fah.setLocation(duckX, duckY);
-                flock.add(fah);
-                tim.subscribe(fah);
-            }
+            createDucks(level * 10);
             momo.setStrokeWidth(w * 0.01f);
             alema.setStrokeWidth(w * 0.02f);
             tim.subscribe(this);
@@ -86,11 +104,22 @@ public class KarlView extends View implements Observer {
             for (var d : flock) {
                 if (d.contains(x, y)) {
                     doomed.add(d);
+                    tim.unsubscribe(d);//right thing to do
                 }
             }
             flock.removeAll(doomed);
+            if (flock.isEmpty()) {
+                level++;
+                var yaz = new HandleButtonClick();
+                AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
+                ab.setTitle("Congratulations!");
+                ab.setMessage("Well, done, captain! You have successfully cleared the sector of the invading duck aliens. The Federation is in need of a captain for a similar mission. Press OK to volunteer.");
+                ab.setCancelable(false);
+                ab.setNeutralButton("OK", yaz);
+                AlertDialog box = ab.create();
+                box.show();
+            }
         }
-        invalidate();
         //true: I handled it; we're done.
         //false: I'll pass this on to the next object in the CoR
         return true;
