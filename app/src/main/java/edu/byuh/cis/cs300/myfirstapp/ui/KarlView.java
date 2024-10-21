@@ -32,14 +32,6 @@ public class KarlView extends View implements Observer {
     private Timer tim;
     private int level;
 
-    private class HandleButtonClick implements DialogInterface.OnClickListener {
-
-        @Override
-        public void onClick(DialogInterface d, int j) {
-            createDucks(level * 10);
-        }
-    }
-
     public KarlView(Context c) {
         super(c);
         level = 1;
@@ -109,6 +101,14 @@ public class KarlView extends View implements Observer {
             }
             flock.removeAll(doomed);
             if (flock.isEmpty()) {
+                //this is a LOCAL CLASS. Only visible to
+                //the onTouchEvent method.
+                class HandleButtonClick implements DialogInterface.OnClickListener {
+                    @Override
+                    public void onClick(DialogInterface d, int j) {
+                        createDucks(level * 10);
+                    }
+                }
                 level++;
                 var yaz = new HandleButtonClick();
                 AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
