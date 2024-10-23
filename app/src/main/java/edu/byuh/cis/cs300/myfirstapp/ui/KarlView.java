@@ -103,19 +103,24 @@ public class KarlView extends View implements Observer {
             if (flock.isEmpty()) {
                 //this is a LOCAL CLASS. Only visible to
                 //the onTouchEvent method.
-                class HandleButtonClick implements DialogInterface.OnClickListener {
-                    @Override
-                    public void onClick(DialogInterface d, int j) {
-                        createDucks(level * 10);
-                    }
-                }
+//                class HandleButtonClick implements DialogInterface.OnClickListener {
+//                    @Override
+//                    public void onClick(DialogInterface d, int j) {
+//                        createDucks(level * 10);
+//                    }
+//                }
                 level++;
-                var yaz = new HandleButtonClick();
+                //var yaz = new HandleButtonClick();
                 AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
                 ab.setTitle("Congratulations!");
                 ab.setMessage("Well, done, captain! You have successfully cleared the sector of the invading duck aliens. The Federation is in need of a captain for a similar mission. Press OK to volunteer.");
                 ab.setCancelable(false);
-                ab.setNeutralButton("OK", yaz);
+                ab.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface d, int j) {
+                        createDucks(level * 10);
+                    }
+                });
                 AlertDialog box = ab.create();
                 box.show();
             }
