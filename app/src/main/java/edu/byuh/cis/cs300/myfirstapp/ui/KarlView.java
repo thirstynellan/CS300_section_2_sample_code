@@ -1,5 +1,6 @@
 package edu.byuh.cis.cs300.myfirstapp.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -101,24 +102,16 @@ public class KarlView extends View implements Observer {
             }
             flock.removeAll(doomed);
             if (flock.isEmpty()) {
-                //this is a LOCAL CLASS. Only visible to
-                //the onTouchEvent method.
-//                class HandleButtonClick implements DialogInterface.OnClickListener {
-//                    @Override
-//                    public void onClick(DialogInterface d, int j) {
-//                        createDucks(level * 10);
-//                    }
-//                }
                 level++;
-                //var yaz = new HandleButtonClick();
                 AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
                 ab.setTitle("Congratulations!");
-                ab.setMessage("Well, done, captain! You have successfully cleared the sector of the invading duck aliens. The Federation is in need of a captain for a similar mission. Press OK to volunteer.");
+                ab.setMessage("Well, done, captain! You have successfully cleared the sector of the invading duck aliens. The Federation is in need of a captain for a similar mission. Do you want to volunteer?");
                 ab.setCancelable(false);
-                ab.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+                ab.setPositiveButton("Yes, play again!", (d, j) -> createDucks(level * 10));
+                ab.setNegativeButton("No, I quit.", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface d, int j) {
-                        createDucks(level * 10);
+                        ((Activity)getContext()).finish();
                     }
                 });
                 AlertDialog box = ab.create();
