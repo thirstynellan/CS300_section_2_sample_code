@@ -103,19 +103,20 @@ public class KarlView extends View implements Observer {
             flock.removeAll(doomed);
             if (flock.isEmpty()) {
                 level++;
-                AlertDialog.Builder ab = new AlertDialog.Builder(getContext());
-                ab.setTitle("Congratulations!");
-                ab.setMessage("Well, done, captain! You have successfully cleared the sector of the invading duck aliens. The Federation is in need of a captain for a similar mission. Do you want to volunteer?");
-                ab.setCancelable(false);
-                ab.setPositiveButton("Yes, play again!", (d, j) -> createDucks(level * 10));
-                ab.setNegativeButton("No, I quit.", new DialogInterface.OnClickListener() {
+                AlertDialog.Builder ab = new AlertDialog.Builder(getContext())
+                  .setTitle("Congratulations!")
+                  .setMessage("Well, done, captain! You have successfully cleared the sector of the invading duck aliens. The Federation is in need of a captain for a similar mission. Do you want to volunteer?")
+                  .setCancelable(false)
+                  .setPositiveButton("Yes, play again!", (d, j) -> createDucks(level * 10))
+                  .setNegativeButton("No, I quit.", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface d, int j) {
                         ((Activity)getContext()).finish();
                     }
                 });
-                AlertDialog box = ab.create();
-                box.show();
+//                AlertDialog box = ab.create();
+//                box.show();
+                ab.create().show();
             }
         }
         //true: I handled it; we're done.
@@ -125,6 +126,9 @@ public class KarlView extends View implements Observer {
 
     @Override
     public void update() {
+        if (Math.random() < 0.1) {
+            post(() -> createDucks(1));
+        }
         invalidate();
     }
 }
