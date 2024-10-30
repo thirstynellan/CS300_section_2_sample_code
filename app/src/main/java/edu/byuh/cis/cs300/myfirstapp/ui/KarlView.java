@@ -17,6 +17,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import edu.byuh.cis.cs300.myfirstapp.Observer;
 import edu.byuh.cis.cs300.myfirstapp.Timer;
@@ -26,7 +29,6 @@ public class KarlView extends View implements Observer {
 
     private Paint alema;
     private Paint momo;
-    //private Duck fah;
     private List<Duck> flock;
     private boolean initialized;
     private Toast hiram;
@@ -79,9 +81,17 @@ public class KarlView extends View implements Observer {
         c.drawColor(Color.GREEN);
         c.drawRect(rectLeft, rectTop, rectRight, rectBottom, momo);
         c.drawLine(w*0.4f, h*0.3f, w*0.8f, h*0.8f, alema);
-        for (var d : flock) {
-            d.draw(c, momo);
-        }
+//        class Ina implements Consumer<Duck> {
+//            @Override
+//            public void accept(Duck d) {
+//                d.draw(c, momo);
+//            }
+//        }
+//        var n = new Ina();
+        flock.forEach(d -> d.draw(c, momo));
+//        for (var d : flock) {
+//            d.draw(c, momo);
+//        }
 //        hiram = Toast.makeText(getContext(),
 //                "CS300 is my favorite class",
 //                Toast.LENGTH_LONG);
@@ -93,14 +103,25 @@ public class KarlView extends View implements Observer {
         if (m.getAction() == MotionEvent.ACTION_DOWN) {
             float x = m.getX();
             float y = m.getY();
-            List<Duck> doomed = new ArrayList<>();
-            for (var d : flock) {
-                if (d.contains(x, y)) {
-                    doomed.add(d);
-                    tim.unsubscribe(d);//right thing to do
-                }
-            }
+//            List<Duck> doomed = new ArrayList<>();
+//            for (var d : flock) {
+//                if (d.contains(x, y)) {
+//                    doomed.add(d);
+//                    tim.unsubscribe(d);//right thing to do
+//                }
+//            }
+//            flock.removeAll(doomed);
+//            class Tom implements Predicate<Duck> {
+//                @Override
+//                public boolean test(Duck d) {
+//                    return d.contains(x,y);
+//                }
+//            }
+//            var tom = new Tom();
+            //flock.removeIf(d -> d.contains(x,y));
+            List<Duck> doomed = flock.stream().filter(d -> d.contains(x,y)).collect(Collectors.toList());
             flock.removeAll(doomed);
+            doomed.forEach(d -> tim.unsubscribe(d));
             if (flock.isEmpty()) {
                 level++;
                 AlertDialog.Builder ab = new AlertDialog.Builder(getContext())
