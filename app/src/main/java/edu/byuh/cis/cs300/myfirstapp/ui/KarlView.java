@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -22,6 +23,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import edu.byuh.cis.cs300.myfirstapp.Observer;
+import edu.byuh.cis.cs300.myfirstapp.R;
 import edu.byuh.cis.cs300.myfirstapp.Timer;
 import edu.byuh.cis.cs300.myfirstapp.sprites.Duck;
 
@@ -34,6 +36,7 @@ public class KarlView extends View implements Observer {
     private Toast hiram;
     private Timer tim;
     private int level;
+    private MediaPlayer song;
 
     public KarlView(Context c) {
         super(c);
@@ -46,6 +49,17 @@ public class KarlView extends View implements Observer {
         momo.setTextSize(70);
         alema = new Paint();
         alema.setColor(Color.RED);
+        song = MediaPlayer.create(getContext(), R.raw.zhaytee_microcomposer_1);
+        song.setLooping(true);
+        song.start();
+    }
+
+    public void pauseMusic() {
+        song.pause();
+    }
+
+    public void resumeMusic() {
+        song.start();
     }
 
     private void createDucks(int n) {

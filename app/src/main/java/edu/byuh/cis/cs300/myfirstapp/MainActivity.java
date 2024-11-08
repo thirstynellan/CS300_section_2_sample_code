@@ -20,6 +20,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        //TODO pause the music
+        kv.pauseMusic();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        //TODO unpause the music
+        kv.resumeMusic();
+    }
+
+    @Override
     public boolean onTouchEvent(MotionEvent m) {
         if (m.getAction() == MotionEvent.ACTION_DOWN) {
             float x = m.getX();
