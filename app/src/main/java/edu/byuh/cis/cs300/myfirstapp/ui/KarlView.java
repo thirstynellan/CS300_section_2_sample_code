@@ -62,6 +62,10 @@ public class KarlView extends View implements Observer {
         song.start();
     }
 
+    public void unloadMusic() {
+        song.release();
+    }
+
     private void createDucks(int n) {
         float w = getWidth();
         float h = getHeight();

@@ -22,15 +22,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        //TODO pause the music
         kv.pauseMusic();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //TODO unpause the music
         kv.resumeMusic();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //un-load the music from memory
+        kv.unloadMusic();
     }
 
     @Override
