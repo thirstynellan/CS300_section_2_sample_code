@@ -1,5 +1,6 @@
 package edu.byuh.cis.cs300.myfirstapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,7 +16,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
-        kv = new KarlView(this);
+        Intent momo = getIntent();
+        boolean dd = momo.getBooleanExtra("DUCK_DIR", true);
+        kv = new KarlView(this, dd);
         setContentView(kv);
     }
 

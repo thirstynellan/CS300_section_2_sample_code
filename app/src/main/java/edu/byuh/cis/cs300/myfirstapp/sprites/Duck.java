@@ -18,7 +18,7 @@ public class Duck implements Observer {
     private int id;
     private static int counter = 1;
 
-    public Duck(Resources res, float w) {
+    public Duck(Resources res, float w, boolean dir) {
         id = counter;
         counter++;
         leftDuck = BitmapFactory.decodeResource(res, R.drawable.duck);
@@ -27,7 +27,11 @@ public class Duck implements Observer {
         bounds = new RectF(0, 0, duckSize, duckSize);
         rightDuck = BitmapFactory.decodeResource(res, R.drawable.duck2);
         rightDuck = Bitmap.createScaledBitmap(rightDuck, duckSize, duckSize, true);
-        img = leftDuck;
+        if (dir == true) {
+            img = rightDuck;
+        } else {
+            img = leftDuck;
+        }
         inverted = false;
     }
 

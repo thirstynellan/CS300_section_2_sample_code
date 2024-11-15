@@ -16,6 +16,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.preference.PreferenceManager;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -23,6 +25,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import edu.byuh.cis.cs300.myfirstapp.Observer;
+import edu.byuh.cis.cs300.myfirstapp.Prefs;
 import edu.byuh.cis.cs300.myfirstapp.R;
 import edu.byuh.cis.cs300.myfirstapp.Timer;
 import edu.byuh.cis.cs300.myfirstapp.sprites.Duck;
@@ -37,9 +40,11 @@ public class KarlView extends View implements Observer {
     private Timer tim;
     private int level;
     private MediaPlayer song;
+    private boolean duckDir;
 
-    public KarlView(Context c) {
+    public KarlView(Context c, boolean dd) {
         super(c);
+        duckDir = dd;
         level = 1;
         initialized = false;
         flock = new ArrayList<>();
@@ -51,15 +56,21 @@ public class KarlView extends View implements Observer {
         alema.setColor(Color.RED);
         song = MediaPlayer.create(getContext(), R.raw.zhaytee_microcomposer_1);
         song.setLooping(true);
-        song.start();
+        if (Prefs.getMusicPref(c)) {
+            song.start();
+        }
     }
 
     public void pauseMusic() {
-        song.pause();
+        if (Prefs.getMusicPref(getContext())) {
+            song.pause();
+        }
     }
 
     public void resumeMusic() {
-        song.start();
+        if (Prefs.getMusicPref(getContext())) {
+            song.start();
+        }
     }
 
     public void unloadMusic() {
@@ -70,7 +81,7 @@ public class KarlView extends View implements Observer {
         float w = getWidth();
         float h = getHeight();
         for (int i=0; i<n; i++) {
-            Duck fah = new Duck(getResources(), w);
+            Duck fah = new Duck(getResources(), w, duckDir);
             float duckX = (float) (w * 0.75 * Math.random());
             float duckY = (float) (h * 0.75 * Math.random());
             fah.setLocation(duckX, duckY);

@@ -1,6 +1,7 @@
 package edu.byuh.cis.cs300.myfirstapp;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.ImageView;
@@ -32,10 +33,17 @@ public class TitleScreen extends AppCompatActivity {
                     //TODO show the "about box"
                 } else {
                     //TODO open the settings screen
+                    Intent tom = new Intent(this, Prefs.class);
+                    startActivity(tom);
                 }
             } else if (y > 2*w/3) {
                 //TODO open the main activity
                 Intent taylor = new Intent(this, MainActivity.class);
+                if (x < w/2) {
+                    taylor.putExtra("DUCK_DIR", true);
+                } else {
+                    taylor.putExtra("DUCK_DIR", false);
+                }
                 startActivity(taylor);
                 finish();
             }
