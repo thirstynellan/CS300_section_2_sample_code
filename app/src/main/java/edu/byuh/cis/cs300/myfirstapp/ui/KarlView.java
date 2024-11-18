@@ -14,8 +14,10 @@ import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ import edu.byuh.cis.cs300.myfirstapp.R;
 import edu.byuh.cis.cs300.myfirstapp.Timer;
 import edu.byuh.cis.cs300.myfirstapp.sprites.Duck;
 
-public class KarlView extends View implements Observer {
+public class KarlView extends AppCompatImageView implements Observer {
 
     private Paint alema;
     private Paint momo;
@@ -46,6 +48,8 @@ public class KarlView extends View implements Observer {
         super(c);
         duckDir = dd;
         level = 1;
+        setImageResource(R.drawable.bkgd2);
+        setScaleType(ScaleType.FIT_XY);
         initialized = false;
         flock = new ArrayList<>();
         momo = new Paint();
@@ -107,9 +111,9 @@ public class KarlView extends View implements Observer {
             tim.subscribe(this);
             initialized = true;
         }
-        c.drawColor(Color.GREEN);
-        c.drawRect(rectLeft, rectTop, rectRight, rectBottom, momo);
-        c.drawLine(w*0.4f, h*0.3f, w*0.8f, h*0.8f, alema);
+        //c.drawColor(Color.GREEN);
+        //c.drawRect(rectLeft, rectTop, rectRight, rectBottom, momo);
+        //c.drawLine(w*0.4f, h*0.3f, w*0.8f, h*0.8f, alema);
 //        class Ina implements Consumer<Duck> {
 //            @Override
 //            public void accept(Duck d) {
