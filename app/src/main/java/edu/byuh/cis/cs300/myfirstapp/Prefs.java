@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.PreferenceScreen;
@@ -32,6 +33,11 @@ public class Prefs extends AppCompatActivity {
         return PreferenceManager.getDefaultSharedPreferences(c).getBoolean("MUSIC_PREF", false);
     }
 
+    public static int getSpeedPref(Context c) {
+        String ky = PreferenceManager.getDefaultSharedPreferences(c).getString("SPEED_PREF", "10");
+        return Integer.parseInt(ky);
+    }
+
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle b, String s) {
@@ -46,6 +52,17 @@ public class Prefs extends AppCompatActivity {
             music.setDefaultValue(false);
             music.setKey("MUSIC_PREF");
             screen.addPreference(music);
+
+            ListPreference speed = new ListPreference(context);
+            speed.setTitle("Duck Dancing Speed");
+            speed.setSummary("How fast should the ducks dance?");
+            speed.setKey("SPEED_PREF");
+            String[] entries = {"Fast", "Medium", "Slow"};
+            String[] values = {"20", "10", "4"};
+            speed.setEntries(entries);
+            speed.setEntryValues(values);
+            speed.setDefaultValue("10");
+            screen.addPreference(speed);
 
             setPreferenceScreen(screen);
         }

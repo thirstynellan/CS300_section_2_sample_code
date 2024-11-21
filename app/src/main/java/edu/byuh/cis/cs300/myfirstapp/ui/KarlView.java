@@ -82,6 +82,7 @@ public class KarlView extends AppCompatImageView implements Observer {
     }
 
     private void createDucks(int n) {
+        int danceSpeed = Prefs.getSpeedPref(getContext());
         float w = getWidth();
         float h = getHeight();
         for (int i=0; i<n; i++) {
@@ -89,6 +90,7 @@ public class KarlView extends AppCompatImageView implements Observer {
             float duckX = (float) (w * 0.75 * Math.random());
             float duckY = (float) (h * 0.75 * Math.random());
             fah.setLocation(duckX, duckY);
+            fah.setDanceSpeed(danceSpeed);
             flock.add(fah);
             tim.subscribe(fah);
         }
