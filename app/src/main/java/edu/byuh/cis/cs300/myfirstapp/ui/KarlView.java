@@ -113,6 +113,8 @@ public class KarlView extends AppCompatImageView implements Observer {
             tim.subscribe(this);
             initialized = true;
         }
+        String greeting = getResources().getString(R.string.aloha);
+        c.drawText(greeting, 100, 100, momo);
         //c.drawColor(Color.GREEN);
         //c.drawRect(rectLeft, rectTop, rectRight, rectBottom, momo);
         //c.drawLine(w*0.4f, h*0.3f, w*0.8f, h*0.8f, alema);
@@ -160,11 +162,11 @@ public class KarlView extends AppCompatImageView implements Observer {
             if (flock.isEmpty()) {
                 level++;
                 AlertDialog.Builder ab = new AlertDialog.Builder(getContext())
-                  .setTitle("Congratulations!")
-                  .setMessage("Well, done, captain! You have successfully cleared the sector of the invading duck aliens. The Federation is in need of a captain for a similar mission. Do you want to volunteer?")
+                  .setTitle(R.string.endgame_title)
+                  .setMessage(R.string.endgame_message)
                   .setCancelable(false)
-                  .setPositiveButton("Yes, play again!", (d, j) -> createDucks(level * 10))
-                  .setNegativeButton("No, I quit.", new DialogInterface.OnClickListener() {
+                  .setPositiveButton(R.string.play_again, (d, j) -> createDucks(level * 10))
+                  .setNegativeButton(R.string.quit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface d, int j) {
                         ((Activity)getContext()).finish();

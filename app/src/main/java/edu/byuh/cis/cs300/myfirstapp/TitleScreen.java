@@ -36,7 +36,7 @@ public class TitleScreen extends AppCompatActivity {
                     Intent tom = new Intent(this, Prefs.class);
                     startActivity(tom);
                 }
-            } else if (y > 2*w/3) {
+            } else if (y > 2*h/3) {
                 //TODO open the main activity
                 Intent taylor = new Intent(this, MainActivity.class);
                 if (x < w/2) {

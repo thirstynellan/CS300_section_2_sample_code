@@ -54,12 +54,12 @@ public class Prefs extends AppCompatActivity {
             screen.addPreference(music);
 
             ListPreference speed = new ListPreference(context);
-            speed.setTitle("Duck Dancing Speed");
-            speed.setSummary("How fast should the ducks dance?");
+            speed.setTitle(R.string.speed_pref_title);
+            speed.setSummary(R.string.speed_pref_summary);
             speed.setKey("SPEED_PREF");
-            String[] entries = {"Fast", "Medium", "Slow"};
+            //String[] entries = {"Fast", "Medium", "Slow"};
             String[] values = {"20", "10", "4"};
-            speed.setEntries(entries);
+            speed.setEntries(R.array.speed_entries);
             speed.setEntryValues(values);
             speed.setDefaultValue("10");
             screen.addPreference(speed);
