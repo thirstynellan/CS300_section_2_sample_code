@@ -8,6 +8,9 @@
     <string name="speed_pref_title">Duck Dancing Speed</string>
     <string name="speed_pref_summary">How fast should the ducks dance?</string>
     <string name="aloha">Aloha CS300</string>
+    <string name="music_pref">Music</string>
+    <string name="music_on">Background music will play</string>
+    <string name="music_off">Background music will NOT play</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
